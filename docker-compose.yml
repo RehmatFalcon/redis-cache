@@ -1,0 +1,19 @@
+﻿services:
+  rediscaching:
+    image: rediscaching
+    environment:
+      redis: localhost:6379
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - redisdata
+    ports:
+      - 5153:8080
+  redisdata:
+    image: redis:latest
+    volumes:
+      - local-data:/data
+    
+volumes:
+  local-data: 

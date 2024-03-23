@@ -1,0 +1,22 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  rediscaching:
+    build:
+      context: "D:\\Projects\\Experiments\\RedisCaching"
+      dockerfile: "Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/RedisCaching.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net8.0/RedisCaching.staticwebassets.runtime.CT.json"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "rediscaching:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\nirou\\.nuget\\packages:/home/app/.nuget/packages"
+    - "D:\\Projects\\Experiments\\RedisCaching:/app:rw"
+    - "D:\\Projects\\Experiments\\RedisCaching:/src:rw"
+    working_dir: "/app"
