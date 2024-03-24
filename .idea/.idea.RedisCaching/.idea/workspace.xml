@@ -14,6 +14,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RedisCaching/Docker/docker-compose.generated.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RedisCaching/Docker/docker-compose.generated.override.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +42,7 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/518d8a94ea5a4196a47bc6ed07d5e6d33b918/b5/c181e5b7/RazorPage.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Experiments/RedisCaching/Program.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
@@ -62,7 +64,7 @@
   "keyToString": {
     "Docker.docker-compose.yml: Compose Deployment.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "feat/redis-country",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -179,7 +181,7 @@
       <option name="presentableId" value="Default" />
       <updated>1692005274055</updated>
       <workItem from="1711191546102" duration="1172000" />
-      <workItem from="1711257918120" duration="3006000" />
+      <workItem from="1711257918120" duration="5817000" />
     </task>
     <servers />
   </component>
@@ -190,5 +192,24 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Program.cs</url>
+          <line>93</line>
+          <properties documentPath="D:\Projects\Experiments\RedisCaching\Program.cs" containingFunctionPresentation="">
+            <startOffsets>
+              <option value="2560" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2606" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
