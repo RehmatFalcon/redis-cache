@@ -9,12 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b839610f-1974-46c7-a9cf-69f59e71bd13" name="Changes" comment="">
+    <list default="true" id="b839610f-1974-46c7-a9cf-69f59e71bd13" name="Changes" comment="feat: add json document">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RedisCaching/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RedisCaching/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RedisCaching/Docker/docker-compose.generated.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RedisCaching/Docker/docker-compose.generated.override.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Home/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,8 +179,17 @@
       <option name="presentableId" value="Default" />
       <updated>1692005274055</updated>
       <workItem from="1711191546102" duration="1172000" />
-      <workItem from="1711257918120" duration="5817000" />
+      <workItem from="1711257918120" duration="6944000" />
     </task>
+    <task id="LOCAL-00001" summary="feat: add json document">
+      <option name="closed" value="true" />
+      <created>1711267038749</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1711267038749</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,6 +199,8 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="feat: add json document" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add json document" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -5,18 +5,34 @@ services:
       context: "D:\\Projects\\Experiments\\RedisCaching"
       dockerfile: "Dockerfile"
       target: "base"
+      args:
+        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "dotnet"
-    - "/app/bin/Debug/net8.0/RedisCaching.dll"
+    - "/opt/rider-debugger/linux-x64/JetBrains.Debugger.Worker"
+    - "--runtimeconfig"
+    - "/opt/rider-debugger/JetBrains.Debugger.Worker.runtimeconfig.json"
+    - "--mode=server"
+    - "--frontend-port=57100"
+    - "--backend-port=57300"
+    - "--timeout=60"
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net8.0/RedisCaching.staticwebassets.runtime.CT.json"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      RIDER_DEBUGGER_LOG_DIR: "/var/opt/rider-debugger"
+      RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "rediscaching:dev"
-    ports: []
+    ports:
+    - "127.0.0.1:57004:57100"
+    - "127.0.0.1:57204:57300"
     volumes:
     - "C:\\Users\\nirou\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\Projects\\Experiments\\RedisCaching:/app:rw"
     - "D:\\Projects\\Experiments\\RedisCaching:/src:rw"
+    - "C:\\Users\\nirou\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.1EAP9\\\
+      Linux64:/opt/rider-debugger"
+    - "C:\\Users\\nirou\\AppData\\Local\\Programs\\Rider\\bin:/etc/opt/rider-debugger/backend-log.xml"
+    - "C:\\Users\\nirou\\AppData\\Local\\JetBrains\\Rider2024.1\\log\\DebuggerWorker\\\
+      JetBrains.Debugger.Worker.2024_3_24_14_12_50:/var/opt/rider-debugger:rw"
     working_dir: "/app"

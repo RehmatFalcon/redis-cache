@@ -110,11 +110,28 @@ app.MapGet("/countries-json", async () =>
     return res2.Select(x => x["json"].ToString());
 });
 
+app.MapGet("/redis-subscribe/{channel}", async (string channel) =>
+{
+    var multiplexer = GetRedisMultiplexer(builder);
+    multiplexer.GetSubscriber().Subscribe(channel, (channel, value) =>
+    {
+        Console.WriteLine($"Received. Channel: {channel}, Message: {value}");
+    });
+    return "Subscription Successful";
+});
+
+app.MapGet("/redis-publish/{channel}/{message}", async (string channel, string message) =>
+{
+    var instance = GetRedisInstance(builder);
+    await instance.PublishAsync(channel, message);
+    return $"Publish successful. Channel: {channel}, Message: {message}.";
+});
+
 app.Run();
 
 IDatabase GetRedisInstance(WebApplicationBuilder webApplicationBuilder)
 {
-    ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(webApplicationBuilder.Configuration["redis"]);
+    var redis = GetRedisMultiplexer(webApplicationBuilder);
     IDatabase db = redis.GetDatabase();
     return db;
 }
@@ -123,6 +140,12 @@ async Task<List<CountryInformation>?> GetCountryDataFromUpstream()
 {
     return await new HttpClient()
         .GetFromJsonAsync<List<CountryInformation>>("https://restcountries.com/v3.1/all");
+}
+
+ConnectionMultiplexer GetRedisMultiplexer(WebApplicationBuilder webApplicationBuilder1)
+{
+    ConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect(webApplicationBuilder1.Configuration["redis"]);
+    return connectionMultiplexer;
 }
 
 public class JsonCountryData()
