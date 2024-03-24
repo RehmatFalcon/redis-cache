@@ -1,3 +1,5 @@
+using System.Text.Json;
+using RedisCaching.Models;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +44,24 @@ app.MapGet("/get-redis-data", () =>
         return "Value not present";
     }
     return "Value: " + result.ToString();
+});
+
+app.MapGet("/countries", async () =>
+{
+    var instance = GetRedisInstance(builder);
+    var key = "countries-list";
+    var existingData = instance.StringGet(key);
+    if (!existingData.HasValue)
+    {
+        var data = await new HttpClient()
+            .GetFromJsonAsync<List<CountryInformation>>("https://restcountries.com/v3.1/all");
+
+        var value = JsonSerializer.Serialize(data);
+        instance.StringSet(key, value);
+        return value;
+    }
+
+    return existingData.ToString();
 });
 
 app.Run();
