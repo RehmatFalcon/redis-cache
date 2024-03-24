@@ -2,7 +2,7 @@
   rediscaching:
     image: rediscaching
     environment:
-      redis: localhost:6379
+      redis: redisdata:6379
     build:
       context: .
       dockerfile: Dockerfile
@@ -14,6 +14,8 @@
     image: redis:latest
     volumes:
       - local-data:/data
-    
+    ports:
+      - 6379:6379
+
 volumes:
   local-data: 
