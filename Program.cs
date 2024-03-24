@@ -1,4 +1,7 @@
 using System.Text.Json;
+using NRedisStack.RedisStackCommands;
+using NRedisStack.Search;
+using NRedisStack.Search.Literals.Enums;
 using RedisCaching.Models;
 using StackExchange.Redis;
 
@@ -43,6 +46,7 @@ app.MapGet("/get-redis-data", () =>
     {
         return "Value not present";
     }
+
     return "Value: " + result.ToString();
 });
 
@@ -53,15 +57,57 @@ app.MapGet("/countries", async () =>
     var existingData = instance.StringGet(key);
     if (!existingData.HasValue)
     {
-        var data = await new HttpClient()
-            .GetFromJsonAsync<List<CountryInformation>>("https://restcountries.com/v3.1/all");
-
-        var value = JsonSerializer.Serialize(data);
+        var countries = await GetCountryDataFromUpstream();
+        var value = JsonSerializer.Serialize(countries);
         instance.StringSet(key, value);
         return value;
     }
 
     return existingData.ToString();
+});
+
+app.MapGet("/create-json-index", () =>
+{
+    var instance = GetRedisInstance(builder);
+    var ft = instance.FT();
+    var schema = new Schema()
+        .AddTextField(new FieldName("$.Flag", "Flag"))
+        .AddNumericField(new FieldName("$.Population", "Population"))
+        .AddTextField(new FieldName("$.Capital", "Capital"))
+        .AddTextField(new FieldName("$.Name", "Name"));
+    ft.Create(
+        "idx:country",
+        new FTCreateParams().On(IndexDataType.JSON).Prefix("country:"),
+        schema);
+});
+
+app.MapGet("/countries-json", async () =>
+{
+    var instance = GetRedisInstance(builder);
+    var key = "countries-list-json";
+    var jsonBuilder = instance.JSON();
+    var ft = instance.FT();
+    var query1 = new Query("*");
+    var res1 = ft.Search("idx:country", query1).Documents;
+    if (res1.Any())
+    {
+        return res1.Select(x => x["json"].ToString());
+    }
+
+    var data = await GetCountryDataFromUpstream();
+
+    for (int i = 0; i < data.Count; i++)
+    {
+        var item = new JsonCountryData();
+        item.Flag = data[i].Flag;
+        item.Population = data[i].Population;
+        item.Capital = data[i].Capital?[0];
+        item.Name = data[i].Name.Official;
+        jsonBuilder.Set($"country:{i}", "$", item);
+    }
+    
+    var res2 = ft.Search("idx:country", query1).Documents;
+    return res2.Select(x => x["json"].ToString());
 });
 
 app.Run();
@@ -71,4 +117,19 @@ IDatabase GetRedisInstance(WebApplicationBuilder webApplicationBuilder)
     ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(webApplicationBuilder.Configuration["redis"]);
     IDatabase db = redis.GetDatabase();
     return db;
+}
+
+async Task<List<CountryInformation>?> GetCountryDataFromUpstream()
+{
+    return await new HttpClient()
+        .GetFromJsonAsync<List<CountryInformation>>("https://restcountries.com/v3.1/all");
+}
+
+public class JsonCountryData()
+{
+
+    public string Flag { get; set; }
+    public long Population { get; set; }
+    public string Capital { get; set; }
+    public string Name { get; set; }
 }
